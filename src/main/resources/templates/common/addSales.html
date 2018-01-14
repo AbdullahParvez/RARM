@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/main">
+<head>
+
+<title>Add Sales</title>
+<link rel="stylesheet" href="css/dashboard.css"
+	th:href="@{/css/dashboard.css}"></link>
+<link rel="stylesheet"
+	href="webjars/font-awesome/4.7.0/css/font-awesome.css"
+	th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}" ></link>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="container-fluid" id="app">
+			<div class="row">
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+					<!--  <pre>{{ $data }}</pre>-->
+
+					<form class="form-horizontal" action="javascript:void(0)">
+						<div v-for="(item, itemIndex) in items"
+							style="margin-bottom: 2em;">
+							<fieldset>
+								<!-- Form Name -->
+								<legend>Add Sales</legend>
+
+								<!-- Text input-->
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="memoNo">Memo
+										No.</label>
+									<div class="col-md-2">
+										<input id="memoNo" name="memoNo" type="text" placeholder=""
+											v-model="item.memoNo" class="form-control input-md"
+											required="required"></input>
+
+									</div>
+								</div>
+
+								<!-- Text input-->
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="customerCode">Customer
+										Code</label>
+									<div class="col-md-2">
+										<select name="customerCode" id="customerCode"
+											v-model="item.customerCode" class="form-control">
+											<option value="">Select Customer Code</option>
+											<option th:each="code : ${customerList}" th:value="${code}"
+												th:text="${code}"></option>
+										</select>
+
+									</div>
+
+									<div>
+										Do you want to <a th:href="@{/addCustomer/sales}">Add
+											Customer</a>
+									</div>
+								</div>
+
+								<div class="row" v-for="(record, index) in item.records">
+
+									<!-- Text input-->
+									<div class="form-group">
+										<label class="col-md-2 control-label" for="itemName">Item
+											Name</label>
+										<div class="col-md-2">
+											<select name="itemName" id="itemName"
+												v-model="record.itemName" class="form-control">
+												<option value="">Select Name</option>
+												<option th:each="name : ${itemNameList}" th:value="${name}"
+													th:text="${name}"></option>
+											</select>
+										</div>
+
+										<div>
+											Do you want to <a th:href="@{/addItem/sales}">Add
+												Item</a>
+										</div>
+
+									</div>
+									<div class="form-group">
+										<!-- Text input-->
+
+										<label class="col-md-2 control-label" for="quantity">Quantity(Unit)</label>
+										<div class="col-md-2">
+											<input name="quantity" id="quantity"
+												v-model="record.quantity" type="number" placeholder="0"
+												class="form-control input-md"></input>
+
+										</div>
+
+
+										<!-- Text input-->
+
+										<label class="col-md-2 control-label" for="unitPrice">Unit
+											Price</label>
+										<div class="col-md-2">
+											<input name="unitPrice" id="unitPrice"
+												v-model="record.unitPrice" type="number" placeholder="0"
+												class="form-control input-md"></input>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+										<!-- Text input-->
+
+										<label class="col-md-2 control-label" for="cash">Cash</label>
+										<div class="col-md-2">
+											<input name="cash" id="cash" v-model="record.cash"
+												type="number" placeholder="0" class="form-control input-md"></input>
+
+										</div>
+
+
+										<!-- Text input-->
+
+										<label class="col-md-2 control-label" for="due">Due</label>
+										<div class="col-md-2">
+											<input name="due" id="due" v-model="record.due" type="number"
+												placeholder="0" class="form-control input-md"></input>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+
+
+										<div class="col-md-1" v-if="showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-info form-control"
+												v-on:click.prevent="addNewRecord(item)">
+												<i class="fa fa-plus-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+										<div class="col-md-1" v-if="!showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-danger form-control"
+												v-on:click.prevent="removeRecord(item, index)">
+												<i class="fa fa-minus-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
+
+								</div>
+								<!-- Button -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submit"></label>
+									<div class="col-md-4">
+										<button id="submit" name="submit" class="btn btn-primary"
+											v-on:click.prevent="submit()">Submit</button>
+									</div>
+								</div>
+
+							</fieldset>
+						</div>
+					</form>
+
+					<div>
+						<a th:href="@{/}">Home</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div layout:fragment="custom-scripts">
+		<!-- Page specific script goes here -->
+		<script src="webjars/vue/2.5.13/vue.js"
+		th:src="@{/webjars/vue/2.5.13/vue.js}"></script>
+		<script src="webjars/vue-resource/1.3.4/dist/vue-resource.js"
+		th:src="@{/webjars/vue-resource/1.3.4/dist/vue-resource.js}"></script>
+
+		<script>
+			new Vue({
+				el : '#app',
+				data : {
+					items : [ {
+						memoNo : '',
+						customerCode : '',
+						records : [ {
+							itemName : 0,
+							quantity : 0,
+							unitPrice : 0,
+							cash : 0,
+							due : 0
+
+						} ]
+					} ]
+				},
+				methods : {
+					addNewRecord : function(item) {
+						var record = {
+							itemName : 0,
+							quantity : 0,
+							unitPrice : 0,
+							cash : 0,
+							due : 0
+						}
+						item.records.push(record);
+					},
+					removeRecord : function(item, recordIndex) {
+						return item.records.splice(recordIndex, 1);
+					},
+					showAddRecordBtn : function(item, recordIndex) {
+						return recordIndex === this.items[this.items
+								.indexOf(item)].records.length - 1;
+					},
+
+					submit : function() {
+						this.$http.post("/saveSales", this.items).then(
+								function(response) {
+									console.log(response);
+									window.location.replace("/");
+								}, function(error) {
+									console.log(error);
+								});
+					}
+				}
+			});
+		</script>
+
+	</div>
+
+
+</body>
+
+</html>
+
+
+
+

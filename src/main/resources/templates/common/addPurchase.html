@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/main">
+<head>
+
+<title>Add Purchase</title>
+<link rel="stylesheet" href="css/dashboard.css"
+	th:href="@{/css/dashboard.css}"></link>
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+					<form class="form-horizontal">
+						<fieldset>
+
+							<!-- Form Name -->
+							<legend>Add Purchase</legend>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="memoNo">Memo
+									No.</label>
+								<div class="col-md-4">
+									<input id="memoNo" name="memoNo" type="text" placeholder=""
+										class="form-control input-md" required="required"></input>
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="name">Company
+									Name</label>
+								<div class="col-md-4">
+									<input id="companyName" name="companyName" type="text"
+										placeholder="" class="form-control input-md"
+										required="required"></input>
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="itemName">Item
+									Name</label>
+								<div class="col-md-4">
+									<input id="itemName" name="itemName" type="text" placeholder=""
+										class="form-control input-md" required="required"></input>
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="amount">Total
+									Amount(Kg)</label>
+								<div class="col-md-4">
+									<input id="amount" name="amount" type="text" placeholder="0"
+										class="form-control input-md"></input>
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="totalPrice">Total
+									Price</label>
+								<div class="col-md-4">
+									<input id="totalPrice" name="totalPrice" type="text"
+										placeholder="0" class="form-control input-md"></input>
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="cash">Cash</label>
+								<div class="col-md-4">
+									<input id="cash" name="cash" type="text" placeholder="0"
+										class="form-control input-md"></input>
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="due">Due</label>
+								<div class="col-md-4">
+									<input id="due" name="due" type="text" placeholder="0"
+										class="form-control input-md"></input>
+
+								</div>
+							</div>
+
+							<!-- Button -->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="submit"></label>
+								<div class="col-md-4">
+									<button id="submit" name="submit" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+
+						</fieldset>
+					</form>
+
+					<div>
+						<a th:href="@{/}">Home</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

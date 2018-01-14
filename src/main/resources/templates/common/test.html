@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dynamic Input Field</title>
+    <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"></link>
+    <style>
+        .botton-space {
+            margin-bottom: .5em !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <h2>Dynamic Input Field</h2>
+        <pre>{{ $data }}</pre>
+        <form action="/action_page.php">
+            <div class="form-group">
+                <label for="item">Item Name:</label>
+                <div class="row">
+                    <div class="col-md-11">
+                        <input type="text" class="form-control" id="item" placeholder="Enter item name" name="item" v-model="item.name"></input>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <div class="row" v-for="(quantity, index) in item.quantities">
+                    <div class="col-md-3">
+                        <input type="number" class="form-control botton-space" placeholder="Enter item quantity" name="quantity" :id="'quantity_'+index" v-model="item.quantities[index]"></input>
+                    </div>
+                    <div class="col-md-1" v-if="showAddBtn(index)">
+                        <button class="btn btn-info" v-on:click.prevent="addNewQuantity()">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-1" v-if="!showAddBtn(index)">
+                        <button class="btn btn-danger" v-on:click.prevent="removeQuantity(index)">
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default" v-on:click.prevent="submit()">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.4/vue-resource.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                item: {
+                    name: '',
+                    quantities: [
+                        0
+                    ]
+                }
+            },
+            methods: {
+                addNewQuantity: function () {
+                    this.item.quantities.push(0);
+                },
+                removeQuantity: function (quantityIndex) {
+                    return this.item.quantities.splice(quantityIndex, 1);
+                },
+                showAddBtn: function (quantityIndex) {
+                    return quantityIndex === this.item.quantities.length - 1;
+                },
+                submit: function () {
+                                      
+                    this.$http.post('http://localhost:8080/addSalesha', this.item).then(function (response) {
+                        console.log(response);
+                    }, function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

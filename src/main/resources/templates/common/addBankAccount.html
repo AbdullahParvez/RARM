@@ -5,7 +5,7 @@
 	layout:decorator="layouts/main">
 <head>
 
-<title>New User</title>
+<title>Add Bank Account</title>
 <link rel="stylesheet" href="css/dashboard.css"
 	th:href="@{/css/dashboard.css}"></link>
 </head>
@@ -18,54 +18,62 @@
 			<div class="row">
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-					<form class="form-horizontal" role="form"
-						th:action="@{/saveNewUser}" method="post">
+					<form class="form-horizontal">
 						<fieldset>
 
 							<!-- Form Name -->
-							<legend>New user</legend>
+							<legend>Add Bank Account</legend>
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="name">Username</label>
+								<label class="col-md-4 control-label" for="bankName">Bank
+									Name</label>
 								<div class="col-md-4">
-									<input id="name" name="name" type="text" placeholder=""
+									<input id="bankName" name="bankName" type="text" placeholder=""
 										class="form-control input-md" required="required"></input>
 
 								</div>
 							</div>
 
-							<!-- Password input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="password">Password</label>
-								<div class="col-md-4">
-									<input id="password" name="password" type="password"
-										placeholder="" class="form-control input-md"
-										required="required"></input>
-								</div>
-								<p class="text-danger" th:text="${param.error[0]}"
-									th:unless="${param.error == null}">Invalid Password</p>
-							</div>
-
 							<!-- Text input-->
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="phone">Phone
-									No.</label>
+								<label class="col-md-4 control-label" for="accountNo">Account
+									No</label>
 								<div class="col-md-4">
-									<input id="phone" name="phone" type="text" placeholder=""
-										class="form-control input-md" required="required"></input>
+									<input id="accountNo" name="accountNo" type="text"
+										placeholder="" class="form-control input-md" required="required"></input>
 
 								</div>
 							</div>
-
-							<!-- Select Basic -->
+							
+							<!-- Text input-->
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="role">Role</label>
+								<label class="col-md-4 control-label" for="accountCode">Account
+									Code</label>
 								<div class="col-md-4">
-									<select id="role" name="role" class="form-control">
-										<option value="Admin">Admin</option>
-										<option value="User">User</option>
-									</select>
+									<input id="accountCode" name="accountCode" type="text"
+										placeholder="" class="form-control input-md" required="required"></input>
+
+								</div>
+							</div>
+							
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="bankCharge">Bank Charge</label>
+								<div class="col-md-4">
+									<input id="bankCharge" name="bankCharge" type="text"
+										placeholder="" class="form-control input-md" required="required"></input>
+
+								</div>
+							</div>
+							
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="bankInterest">Bank Interest</label>
+								<div class="col-md-4">
+									<input id="bankInterest" name="bankInterest" type="text"
+										placeholder="" class="form-control input-md" required="required"></input>
+
 								</div>
 							</div>
 
@@ -83,6 +91,7 @@
 					<div>
 					<a th:href="@{/}">Home</a>
 					</div>
+
 				</div>
 			</div>
 		</div>

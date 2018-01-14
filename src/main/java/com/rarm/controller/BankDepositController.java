@@ -7,17 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class HomeController {
+public class BankDepositController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+private static final Logger LOGGER = LoggerFactory.getLogger(BankDepositController.class);
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/addBankDeposit", method=RequestMethod.GET)
 	public String showHome(){
-		LOGGER.debug("Rendering home page");
+		LOGGER.debug("Rendering addBankDeposit page");
 		
-		return "home";		
+		return "common/addBankDeposit";		
 	}
-	
-	
 
 }

@@ -26,14 +26,12 @@ public class User extends BaseEntity<Long> {
 
 	@Column(name = "phone", length = 50, nullable = false)
 	private String phone;
+	
+	public User(){}
 
 	@Override
 	public Long getId() {
 		return id;
-	}
-
-	public String getphone() {
-		return phone;
 	}
 
 	public String getName() {
@@ -44,6 +42,10 @@ public class User extends BaseEntity<Long> {
 		return password;
 	}
 
+	public String getphone() {
+		return phone;
+	}
+
 	public String getRole() {
 		return role;
 	}
@@ -52,16 +54,16 @@ public class User extends BaseEntity<Long> {
 		this.id = id;
 	}
 
-	public void setphone(String phone) {
-		this.phone = phone;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setphone(String phone) {
+		this.phone = phone;
 	}
 
 	public void setRole(String role) {

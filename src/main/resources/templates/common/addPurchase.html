@@ -8,107 +8,154 @@
 <title>Add Purchase</title>
 <link rel="stylesheet" href="css/dashboard.css"
 	th:href="@{/css/dashboard.css}"></link>
+<link rel="stylesheet"
+	href="webjars/font-awesome/4.7.0/css/font-awesome.css"
+	th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}"></link>
 </head>
 
 <body>
 
 	<div layout:fragment="content">
 
-		<div class="container-fluid">
+		<div class="container-fluid" id="app">
 			<div class="row">
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-					<form class="form-horizontal">
-						<fieldset>
+					<!--  <pre>{{ $data }}</pre>-->
 
-							<!-- Form Name -->
-							<legend>Add Purchase</legend>
+					<form class="form-horizontal" action="javascript:void(0)">
+						<div v-for="(item, itemIndex) in items"
+							style="margin-bottom: 2em;">
+							<fieldset>
 
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="memoNo">Memo
-									No.</label>
-								<div class="col-md-4">
-									<input id="memoNo" name="memoNo" type="text" placeholder=""
-										class="form-control input-md" required="required"></input>
+								<!-- Form Name -->
+								<legend>Add Purchase</legend>
+
+								<!-- Text input-->
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="memoNo">Memo
+										No.</label>
+									<div class="col-md-2">
+										<input id="memoNo" name="memoNo" type="text" placeholder=""
+											v-model="item.memoNo" class="form-control input-md"
+											required="required"></input>
+
+									</div>
+								</div>
+
+								<!-- Text input-->
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="companyCode">Customer
+										Code</label>
+									<div class="col-md-2">
+										<select name="companyCode" id="companyCode"
+											v-model="item.companyCode" class="form-control">
+											<option value="">Select Company Code</option>
+											<option th:each="code : ${companyList}" th:value="${code}"
+												th:text="${code}"></option>
+										</select>
+
+									</div>
+
+									<div>
+										Do you want to <a th:href="@{/addCompany/purchase}">Add
+											Company</a>
+									</div>
+								</div>
+
+								<div class="row" v-for="(record, index) in item.records">
+
+									<!-- Text input-->
+									<div class="form-group">
+										<label class="col-md-2 control-label" for="itemName">Item
+											Name</label>
+										<div class="col-md-2">
+											<select name="itemName" id="itemName"
+												v-model="record.itemName" class="form-control">
+												<option value="">Select Name</option>
+												<option th:each="name : ${itemNameList}" th:value="${name}"
+													th:text="${name}"></option>
+											</select>
+										</div>
+
+										<div>
+											Do you want to <a th:href="@{/addItem/purchase}">Add Item</a>
+										</div>
+
+									</div>
+									<div class="form-group">
+										<!-- Text input-->
+
+										<label class="col-md-2 control-label" for="quantity">Quantity(Unit)</label>
+										<div class="col-md-2">
+											<input name="quantity" id="quantity"
+												v-model="record.quantity" type="number" placeholder="0"
+												class="form-control input-md"></input>
+
+										</div>
+
+										<!-- Text input-->
+										<label class="col-md-2 control-label" for="unitPrice">Unit
+											Price</label>
+										<div class="col-md-2">
+											<input name="unitPrice" id="unitPrice"
+												v-model="record.unitPrice" type="number" placeholder="0"
+												class="form-control input-md"></input>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+										<!-- Text input-->
+
+										<label class="col-md-2 control-label" for="cash">Cash</label>
+										<div class="col-md-2">
+											<input name="cash" id="cash" v-model="record.cash"
+												type="number" placeholder="0" class="form-control input-md"></input>
+										</div>
+
+										<!-- Text input-->
+
+										<label class="col-md-2 control-label" for="due">Due</label>
+										<div class="col-md-2">
+											<input name="due" id="due" v-model="record.due" type="number"
+												placeholder="0" class="form-control input-md"></input>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+
+
+										<div class="col-md-1" v-if="showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-info form-control"
+												v-on:click.prevent="addNewRecord(item)">
+												<i class="fa fa-plus-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+										<div class="col-md-1" v-if="!showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-danger form-control"
+												v-on:click.prevent="removeRecord(item, index)">
+												<i class="fa fa-minus-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
 
 								</div>
-							</div>
 
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="name">Company
-									Name</label>
-								<div class="col-md-4">
-									<input id="companyName" name="companyName" type="text"
-										placeholder="" class="form-control input-md"
-										required="required"></input>
-
+								<!-- Button -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submit"></label>
+									<div class="col-md-4">
+										<button id="submit" name="submit" class="btn btn-primary"
+											v-on:click.prevent="submit()">Submit</button>
+									</div>
 								</div>
-							</div>
 
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="itemName">Item
-									Name</label>
-								<div class="col-md-4">
-									<input id="itemName" name="itemName" type="text" placeholder=""
-										class="form-control input-md" required="required"></input>
-
-								</div>
-							</div>
-
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="amount">Total
-									Amount(Kg)</label>
-								<div class="col-md-4">
-									<input id="amount" name="amount" type="text" placeholder="0"
-										class="form-control input-md"></input>
-
-								</div>
-							</div>
-
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="totalPrice">Total
-									Price</label>
-								<div class="col-md-4">
-									<input id="totalPrice" name="totalPrice" type="text"
-										placeholder="0" class="form-control input-md"></input>
-
-								</div>
-							</div>
-
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="cash">Cash</label>
-								<div class="col-md-4">
-									<input id="cash" name="cash" type="text" placeholder="0"
-										class="form-control input-md"></input>
-
-								</div>
-							</div>
-
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="due">Due</label>
-								<div class="col-md-4">
-									<input id="due" name="due" type="text" placeholder="0"
-										class="form-control input-md"></input>
-
-								</div>
-							</div>
-
-							<!-- Button -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="submit"></label>
-								<div class="col-md-4">
-									<button id="submit" name="submit" class="btn btn-primary">Submit</button>
-								</div>
-							</div>
-
-						</fieldset>
+							</fieldset>
+						</div>
 					</form>
 
 					<div>
@@ -120,6 +167,68 @@
 		</div>
 
 	</div>
+
+	<div layout:fragment="custom-scripts">
+		<!-- Page specific script goes here -->
+		<script src="webjars/vue/2.5.13/vue.js"
+			th:src="@{/webjars/vue/2.5.13/vue.js}"></script>
+		<script src="webjars/axios/0.17.1/dist/axios.js"
+			th:src="@{/webjars/axios/0.17.1/dist/axios.js}"></script>
+
+		<script>
+			new Vue({
+				el : '#app',
+				data : {
+					items : [ {
+						memoNo : '',
+						companyCode : '',
+						records : [ {
+							itemName : 0,
+							quantity : 0,
+							unitPrice : 0,
+							cash : 0,
+							due : 0
+
+						} ]
+					} ]
+				},
+				methods : {
+					addNewRecord : function(item) {
+						var record = {
+							itemName : 0,
+							quantity : 0,
+							unitPrice : 0,
+							cash : 0,
+							due : 0
+						}
+						item.records.push(record);
+					},
+					removeRecord : function(item, recordIndex) {
+						return item.records.splice(recordIndex, 1);
+					},
+					showAddRecordBtn : function(item, recordIndex) {
+						return recordIndex === this.items[this.items
+								.indexOf(item)].records.length - 1;
+					},
+
+					submit : function() {
+						var self = this;
+
+						axios.post('/savePurchase', self.items)
+						.then(function (response) {
+						    console.log(response);
+						    window.location.replace('/');
+						})
+						.catch(function (error) {
+						    console.log(error);
+						});
+					}
+				}
+			});
+		</script>
+
+	</div>
+
 
 </body>
 

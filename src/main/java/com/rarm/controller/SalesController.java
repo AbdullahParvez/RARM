@@ -38,7 +38,7 @@ SalesService salesService;
 Item item =new Item();
 	
 	@RequestMapping(value="/addSales", method=RequestMethod.GET)
-	public String showSalesTest( Model model){
+	public String addSales( Model model){
 		LOGGER.debug("Rendering addSales page");		
 		String category = "sales";
 		List<String> itemNameList = itemService.findItemNamebyCategory(category);
@@ -73,7 +73,7 @@ Item item =new Item();
 	}
 	
 	@RequestMapping(value = "/saveSales", method = RequestMethod.POST)	
-    public @ResponseBody String saveBoard(@RequestBody RestSales[] restSales){
+    public @ResponseBody String saveSales(@RequestBody RestSales[] restSales){
 		List<Sales> allSales = new ArrayList<>();
 		for(RestSales sale : restSales){			
 			String memoNo = sale.getMemoNo();

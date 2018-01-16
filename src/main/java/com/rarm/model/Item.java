@@ -32,6 +32,19 @@ public class Item extends BaseEntity<Long> {
 	@Column(name = "description")
 	@Type(type = "text")
 	private String description;
+	
+	public Item(){
+		
+	}
+
+	public Item(String itemName, String unitValue, String metricType, String category, String description) {
+		super();
+		this.itemName = itemName;
+		this.unitValue = unitValue;
+		this.metricType = metricType;
+		this.category = category;
+		this.description = description;
+	}
 
 	public String getCategory() {
 		return category;

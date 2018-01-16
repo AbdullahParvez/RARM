@@ -41,7 +41,7 @@ private CompanyService companyService;
 		
 		companyService.save(company);
 		
-		return "redirect:/addSales";
+		return "redirect:/addPurchase";
 		
 	}
 

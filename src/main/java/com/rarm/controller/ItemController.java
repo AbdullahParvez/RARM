@@ -18,36 +18,45 @@ import com.rarm.services.ItemService;
 
 @Controller
 public class ItemController {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ItemController.class);
-	
+
 	@Autowired
 	private ItemService itemService;
-	
-	@RequestMapping(value="/addItem", method=RequestMethod.GET)
-	public String showHome(){
+
+	@RequestMapping(value = "/addItem", method = RequestMethod.GET)
+	public String showHome() {
 		LOGGER.debug("Rendering addItem page");
-		
-		return "common/addItem";		
-	}
-	
-	@RequestMapping(value="/saveItem", method=RequestMethod.POST)
-	public String saveNewUser(@Valid ItemValidation itemValidation, BindingResult result, WebRequest request, RedirectAttributes redirectAttributes){
-		
-		if(result.hasErrors()){
-			System.out.println(result.getAllErrors());
-		}
-		Item item = new Item();
-		item.setItemName(request.getParameter("itemName"));
-		item.setUnitValue(request.getParameter("unitValue"));
-		item.setMetricType(request.getParameter("metricType"));
-		item.setCategory(request.getParameter("category"));
-		item.setDescription(request.getParameter("description"));
-		
-		itemService.save(item);
-		
-		return "redirect:/addSales";
-		
+
+		return "common/addItem";
 	}
 
+	@RequestMapping(value = "/saveItem", method = RequestMethod.POST)
+	public String saveItem(@Valid ItemValidation itemValidation, BindingResult result, WebRequest request,
+			RedirectAttributes redirectAttributes) {
+
+		if (result.hasErrors()) {
+			System.out.println(result.getAllErrors());
+		}
+
+		String itemName = request.getParameter("itemName");
+		String unitValue = request.getParameter("unitValue");
+		String metricType = request.getParameter("metricType");
+		String category = request.getParameter("category");
+		String description = request.getParameter("description");
+		Item item = new Item(itemName, unitValue, metricType, category, description);
+		itemService.save(item);
+
+		switch (category) {
+		case "sales":
+			return "redirect:/addSales";
+
+		case "purchase":
+			return "redirect:/addPurchase";
+
+		default:
+			return "home";
+		}
+
+	}
 }

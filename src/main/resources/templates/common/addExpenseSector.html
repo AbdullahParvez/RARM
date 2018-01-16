@@ -5,7 +5,7 @@
 	layout:decorator="layouts/main">
 <head>
 
-<title>Add Expense Item</title>
+<title>Add Expense sector</title>
 <link rel="stylesheet" href="css/dashboard.css"
 	th:href="@{/css/dashboard.css}"></link>
 </head>
@@ -22,14 +22,14 @@
 						<fieldset>
 
 							<!-- Form Name -->
-							<legend>Add Expense Time</legend>
+							<legend>Add Expense Sector</legend>
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="itemName">Item
+								<label class="col-md-4 control-label" for="sectorName">Sector
 									Name</label>
 								<div class="col-md-4">
-									<input id="itemName" name="itemName" type="text" placeholder=""
+									<input id="sectorName" name="sectorName" type="text" placeholder=""
 										class="form-control input-md" required="required"></input>
 
 								</div>
@@ -54,9 +54,9 @@
 
 						</fieldset>
 					</form>
-					
+
 					<div>
-					<a th:href="@{/}">Home</a>
+						<a th:href="@{/}">Home</a>
 					</div>
 
 				</div>

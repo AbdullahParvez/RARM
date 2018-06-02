@@ -1,6 +1,7 @@
 package com.rarm.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "purchases")
@@ -23,6 +25,9 @@ public class Purchase extends BaseEntity<Long> {
 	@Column(name = "companyCode", length = 100, nullable = false)
 	private String companyCode;
 
+	@Column(name = "date", length = 100, nullable = false)
+	private Date date;
+
 	@Column(name = "itemName", length = 100, nullable = false)
 	private String itemName;
 
@@ -32,43 +37,55 @@ public class Purchase extends BaseEntity<Long> {
 	@Column(name = "unitPrice", length = 20, nullable = false)
 	private BigDecimal unitPrice;
 
-	@Column(name = "cash", length = 20, nullable = false)
-	private BigDecimal cash;
+	@Transient
+	private BigDecimal totalPrice;
 
-	@Column(name = "due", length = 20, nullable = false)
-	private BigDecimal due;
+	@Transient
+	private Date insertDate;
 
 	public Purchase() {
 
 	}
 
-	public Purchase(String memoNo, String companyCode, String itemName, BigDecimal quantity, BigDecimal unitPrice,
-			BigDecimal cash, BigDecimal due) {
+	public Purchase(String memoNo, String companyCode, Date date, String itemName, BigDecimal quantity,
+			BigDecimal unitPrice) {
 		super();
 		this.memoNo = memoNo;
 		this.companyCode = companyCode;
+		this.date = date;
 		this.itemName = itemName;
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
-		this.cash = cash;
-		this.due = due;
 	}
 
-	public BigDecimal getCash() {
-		return cash;
+	public Purchase(String memoNo, String companyCode, Date date, String itemName, BigDecimal quantity,
+			BigDecimal unitPrice, BigDecimal totalPrice, Date insertDate) {
+		super();
+		this.memoNo = memoNo;
+		this.companyCode = companyCode;
+		this.date = date;
+		this.itemName = itemName;
+		this.quantity = quantity;
+		this.unitPrice = unitPrice;
+		this.totalPrice = totalPrice;
+		this.insertDate = insertDate;
 	}
 
 	public String getCompanyCode() {
 		return companyCode;
 	}
 
-	public BigDecimal getDue() {
-		return due;
+	public Date getDate() {
+		return date;
 	}
 
 	@Override
 	public Long getId() {
 		return id;
+	}
+
+	public Date getInsertDate() {
+		return insertDate;
 	}
 
 	public String getItemName() {
@@ -83,24 +100,28 @@ public class Purchase extends BaseEntity<Long> {
 		return quantity;
 	}
 
-	public BigDecimal getUnitPrice() {
-		return unitPrice;
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setCash(BigDecimal cash) {
-		this.cash = cash;
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
 	}
 
 	public void setCompanyCode(String companyCode) {
 		this.companyCode = companyCode;
 	}
 
-	public void setDue(BigDecimal due) {
-		this.due = due;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
 	}
 
 	public void setItemName(String itemName) {
@@ -115,14 +136,18 @@ public class Purchase extends BaseEntity<Long> {
 		this.quantity = quantity;
 	}
 
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
 	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
 	@Override
 	public String toString() {
-		return "Purchase [memoNo=" + memoNo + ", companyCode=" + companyCode + ", itemName=" + itemName + ", quantity="
-				+ quantity + ", unitPrice=" + unitPrice + ", cash=" + cash + ", due=" + due + "]";
+		return "Purchase [memoNo=" + memoNo + ", companyCode=" + companyCode + ", date=" + date + ", itemName="
+				+ itemName + ", quantity=" + quantity + ", unitPrice=" + unitPrice + "]";
 	}
 
 }

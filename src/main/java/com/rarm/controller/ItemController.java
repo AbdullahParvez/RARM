@@ -25,10 +25,17 @@ public class ItemController {
 	private ItemService itemService;
 
 	@RequestMapping(value = "/addItem", method = RequestMethod.GET)
-	public String showHome() {
+	public String addItem() {
 		LOGGER.debug("Rendering addItem page");
 
 		return "common/addItem";
+	}
+	
+	@RequestMapping(value = "/addPaddyItem", method = RequestMethod.GET)
+	public String addPaddyItem() {
+		LOGGER.debug("Rendering addPaddyItem page");
+
+		return "common/addPaddyItem";
 	}
 
 	@RequestMapping(value = "/saveItem", method = RequestMethod.POST)
@@ -53,6 +60,9 @@ public class ItemController {
 
 		case "purchase":
 			return "redirect:/addPurchase";
+			
+		case "riceSales":
+			return "redirect:/addRiceSales";
 
 		default:
 			return "home";

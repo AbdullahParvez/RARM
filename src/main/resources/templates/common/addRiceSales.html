@@ -8,11 +8,15 @@
 <title>Add Purchase</title>
 <link rel="stylesheet" href="css/dashboard.css"
 	th:href="@{/css/dashboard.css}"></link>
+<link rel="stylesheet" href="css/vue-datepicker-local.css"
+	th:href="@{/css/vue-datepicker-local.css}"></link>
 <link rel="stylesheet"
 	href="webjars/font-awesome/4.7.0/css/font-awesome.css"
 	th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}"></link>
-<link rel="stylesheet" href="css/vue-datepicker-local.css"
-	th:href="@{/css/vue-datepicker-local.css}"></link>
+<link rel="stylesheet"
+	href="webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css"
+	th:href="@{/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css}"></link>
+
 </head>
 
 <body>
@@ -23,7 +27,7 @@
 			<div class="row">
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-					<!--  <pre>{{ $data }}</pre>-->
+					<pre>{{ $data }}</pre>
 
 					<form class="form-horizontal" action="javascript:void(0)">
 						<div v-for="(item, itemIndex) in items"
@@ -31,7 +35,7 @@
 							<fieldset>
 
 								<!-- Form Name -->
-								<legend>Add Purchase</legend>
+								<legend>Add Rice Sales</legend>
 
 								<!-- Text input-->
 								<div class="form-group">
@@ -41,7 +45,6 @@
 										<input id="memoNo" name="memoNo" type="text" placeholder=""
 											v-model="item.memoNo" class="form-control input-md"
 											required="required"></input>
-
 									</div>
 								</div>
 
@@ -56,20 +59,26 @@
 											<option th:each="code : ${companyList}" th:value="${code}"
 												th:text="${code}"></option>
 										</select>
-
 									</div>
-
 									<div>
-										Do you want to <a th:href="@{/addCompany/purchase}">Add
+										Do you want to <a th:href="@{/addCompany/riceSales}">Add
 											Company</a>
 									</div>
 								</div>
-
+								<!-- 
+								<div class="form-group">
+									Date input 
+									<label class="col-md-2 control-label" for="date">Date</label>
+									<div class="col-md-2">
+										<input class="form-control input-md" id="date" name="date"
+											placeholder="DD/MM/YYYY" type="text" />
+									</div>
+								</div>
+-->
 								<div>
 
 									<label class="col-md-2 control-label" for="date">Date</label>
-									<vue-datepicker-local v-model="item.date" format="DD-MM-YYYY"
-										:local="local"></vue-datepicker-local>
+									<vue-datepicker-local v-model="item.date" format="DD-MM-YYYY" :local="local"></vue-datepicker-local>
 								</div>
 
 								<div class="row" v-for="(record, index) in item.records">
@@ -86,21 +95,18 @@
 													th:text="${name}"></option>
 											</select>
 										</div>
-
 										<div>
-											Do you want to <a th:href="@{/addItem/purchase}">Add Item</a>
+											Do you want to <a th:href="@{/addItem/rice}">Add Item</a>
 										</div>
-
 									</div>
 									<div class="form-group">
 										<!-- Text input-->
 
-										<label class="col-md-2 control-label" for="quantity">Quantity(Unit)</label>
+										<label class="col-md-2 control-label" for="quantity">Quantity(Bag)</label>
 										<div class="col-md-2">
 											<input name="quantity" id="quantity"
 												v-model="record.quantity" type="number" placeholder="0"
 												class="form-control input-md"></input>
-
 										</div>
 
 										<!-- Text input-->
@@ -110,7 +116,6 @@
 											<input name="unitPrice" id="unitPrice"
 												v-model="record.unitPrice" type="number" placeholder="0"
 												class="form-control input-md"></input>
-
 										</div>
 									</div>
 
@@ -130,10 +135,10 @@
 											</button>
 										</div>
 									</div>
+
 								</div>
 
 								<!-- Button -->
-
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="submit"></label>
 									<div class="col-md-4">
@@ -145,13 +150,15 @@
 							</fieldset>
 						</div>
 					</form>
-				</div>
-				<div>
-					<a th:href="@{/}">Home</a>
-				</div>
 
+					<div>
+						<a th:href="@{/}">Home</a>
+					</div>
+
+				</div>
 			</div>
 		</div>
+
 	</div>
 
 	<div layout:fragment="custom-scripts">
@@ -162,7 +169,10 @@
 			th:src="@{/webjars/axios/0.17.1/dist/axios.js}"></script>
 <!-- 		<script src="js/vue-datepicker-local.css"
 			th:src="@{/js/vue-datepicker-local.css}"></script>-->
-		<script src="https://cdn.jsdelivr.net/npm/vue-datepicker-local@1.0.14/dist/vue-datepicker-local.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/vue-datepicker-local@1.0.14/dist/vue-datepicker-local.js"></script>
+		<script
+			src="webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"
+			th:src="@{/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js}"></script>
 
 		<script>
 		new Vue({
@@ -205,7 +215,7 @@
                 submit : function() {
                     var self = this;
 
-                    axios.post('/savePurchase', self.items)
+                    axios.post('/saveRiceSales', self.items)
                     .then(function (response) {                        
                         console.log(response);
                         window.location.replace('/');

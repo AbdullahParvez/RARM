@@ -32,6 +32,19 @@ public class Company extends BaseEntity<Long> {
 
 	@Column(name = "category", length = 100, nullable = false)
 	private String category;
+	
+	public Company(){
+		
+	}
+
+	public Company(String name, String codeNumber, String address, String mobile, String category) {
+		super();
+		this.name = name;
+		this.codeNumber = codeNumber;
+		this.address = address;
+		this.mobile = mobile;
+		this.category = category;
+	}
 
 	public String getAddress() {
 		return address;

@@ -31,17 +31,29 @@ private CompanyService companyService;
 	public String saveNewUser(WebRequest request,RedirectAttributes redirectAttributes){
 		
 		
-		Company company = new Company();
-		company.setName(request.getParameter("name"));
-		company.setCodeNumber(request.getParameter("codeNumber"));
-		company.setAddress(request.getParameter("address"));
-		company.setMobile(request.getParameter("mobile"));
-		company.setCategory(request.getParameter("category"));
 		
+		String name = request.getParameter("name");
+		String codeNumber = request.getParameter("codeNumber");
+		String address = request.getParameter("address");
+		String mobile = request.getParameter("mobile");
+		String category = request.getParameter("category");
 		
+		Company company = new Company(name, codeNumber, address, mobile, category);
 		companyService.save(company);
 		
-		return "redirect:/addPurchase";
+		switch (category) {
+		case "purchase":
+			return "redirect:/addPurchase";
+
+		case "paddyPurchase":
+			return "redirect:/paddyPurchase";
+			
+		case "riceSales":
+			return "redirect:/addRiceSales";
+
+		default:
+			return "home";
+		}
 		
 	}
 

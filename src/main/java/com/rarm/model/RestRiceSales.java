@@ -1,25 +1,13 @@
 package com.rarm.model;
 
-import java.util.Date;
 import java.util.List;
 
-public class RestPurchase {
+public class RestRiceSales {
 
 	private String memoNo;
-
 	private String companyCode;
-
 	private String date;
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	private List<Records> records;
+	private List<RecordsRiceSales> records;
 
 	public String getMemoNo() {
 		return memoNo;
@@ -37,17 +25,28 @@ public class RestPurchase {
 		this.companyCode = companyCode;
 	}
 
-	public List<Records> getRecords() {
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public List<RecordsRiceSales> getRecords() {
 		return records;
 	}
 
-	public void setRecords(List<Records> records) {
+	public void setRecords(List<RecordsRiceSales> records) {
 		this.records = records;
 	}
 
 	@Override
 	public String toString() {
-		return "RestSales [memoNo=" + memoNo + ", companyCode=" + companyCode + ", records=" + records + "]";
+		return "RestRiceSales [memoNo=" + memoNo + ", companyCode=" + companyCode + ", date=" + date + ", records="
+				+ records + "]";
 	}
+	
+	
 
 }

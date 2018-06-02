@@ -1,7 +1,10 @@
 package com.rarm.controller;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.rarm.model.Item;
 import com.rarm.model.Purchase;
 import com.rarm.model.Records;
 import com.rarm.model.RestPurchase;
@@ -31,12 +33,12 @@ public class PurchaseController {
 	ItemService itemService;
 
 	@Autowired
-	CompanyService companyService;
+	private CompanyService companyService;
 
 	@Autowired
-	PurchaseService purchaseService;
+	private PurchaseService purchaseService;
 
-	Item item = new Item();
+	//Item item = new Item();
 
 	@RequestMapping(value = "/addPurchase", method = RequestMethod.GET)
 	public String addPurchase(Model model) {
@@ -60,8 +62,11 @@ public class PurchaseController {
 	@RequestMapping(value = "/addItem/purchase", method = RequestMethod.GET)
 	public String showAddItem(String category, Model model) {
 		LOGGER.debug("Rendering addItem page for adding purchase Item");
-		item.setCategory("purchase");
-		model.addAttribute("category", item.getCategory());
+		//item.setCategory("purchase");
+		//model.addAttribute("category", item.getCategory());
+		category = "purchase";
+		model.addAttribute("category", category);
+		
 		return "common/addItem";
 	}
 
@@ -74,24 +79,33 @@ public class PurchaseController {
 	}
 
 	@RequestMapping(value = "/savePurchase", method = RequestMethod.POST)
-	public @ResponseBody String savePurchase(@RequestBody RestPurchase[] restpurchase) {
-		List<Purchase> allpurchase = new ArrayList<>();
-		for (RestPurchase pur : restpurchase) {
+	public @ResponseBody String savePurchase(@RequestBody RestPurchase[] restPurchase) throws ParseException {
+		List<Purchase> allPurchase = new ArrayList<>();
+		for (RestPurchase pur : restPurchase) {
 			String memoNo = pur.getMemoNo();
 			String companyCode = pur.getCompanyCode();
+			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(pur.getDate());
 			for (Records r : pur.getRecords()) {
 				String itemName = r.getItemName();
 				BigDecimal quantity = r.getQuantity();
 				BigDecimal unitPrice = r.getUnitPrice();
-				BigDecimal cash = r.getCash();
-				BigDecimal due = r.getDue();
-				Purchase purchase = new Purchase(memoNo, companyCode, itemName, quantity, unitPrice, cash, due);
-				allpurchase.add(purchase);
+				Purchase purchase = new Purchase(memoNo, companyCode, date, itemName, quantity, unitPrice);
+				allPurchase.add(purchase);
 			}
 
 		}
-		purchaseService.save(allpurchase);
+		purchaseService.save(allPurchase);
 		return "home";
+	}
+	
+	@RequestMapping(value = "/getAllPurchase", method = RequestMethod.GET)
+	public String getAllPurchase(Model model){
+		
+		List<Purchase> purchase = purchaseService.findAllPurchase();
+		model.addAttribute("purchase",purchase);
+		
+		return "common/listOfPurchase";
+		
 	}
 
 }

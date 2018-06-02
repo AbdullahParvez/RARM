@@ -5,7 +5,7 @@
 	layout:decorator="layouts/main">
 <head>
 
-<title>Add Item</title>
+<title>Add Production</title>
 <link rel="stylesheet" href="css/dashboard.css"
 	th:href="@{/css/dashboard.css}"></link>
 </head>
@@ -18,16 +18,11 @@
 			<div class="row">
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-
-					<form class="form-horizontal" role="form" th:action="@{/saveItem}"
-						method="post">
+					<form class="form-horizontal">
 						<fieldset>
 
 							<!-- Form Name -->
-							<legend>Add Item</legend>
-
-							<input type="hidden" id="category" name="category"
-								th:value="${category}"></input>
+							<legend>Add Usage</legend>
 
 							<!-- Text input-->
 							<div class="form-group">
@@ -42,31 +37,12 @@
 
 							<!-- Text input-->
 							<div class="form-group">
-								<label class="col-md-4 control-label" for="unitValue">Unit Value</label>
+								<label class="col-md-4 control-label" for="amount">Total
+									Amount(Unit)</label>
 								<div class="col-md-4">
-									<input id="unitValue" name="unitValue" type="text"
-										placeholder="" class="form-control input-md"
-										required="required"></input>
+									<input id="amount" name="amount" type="text" placeholder="0"
+										class="form-control input-md"></input>
 
-								</div>
-
-								<label class="col-md-4 control-label" for="metricType"></label>
-								<div class="col-md-4">
-									<select id="metricType" name="metricType"
-										class="form-control">
-										<option value="KG">KG</option>
-										<option value="Piece">Piece</option>
-										<option value="Bag">Bag</option>
-									</select>
-								</div>
-							</div>
-
-							<!-- Textarea -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="description">Description</label>
-								<div class="col-md-4">
-									<textarea class="form-control" id="description"
-										name="description"></textarea>
 								</div>
 							</div>
 
@@ -80,12 +56,9 @@
 
 						</fieldset>
 					</form>
+					
 					<div>
-						<h1 th:text="${category}">Item</h1>
-					</div>
-
-					<div>
-						<a th:href="@{/}">Home</a>
+					<a th:href="@{/}">Home</a>
 					</div>
 
 				</div>

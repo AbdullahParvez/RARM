@@ -1,7 +1,10 @@
 package com.rarm.controller;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -34,8 +37,6 @@ CustomerService customerService;
 
 @Autowired
 SalesService salesService;
-
-Item item =new Item();
 	
 	@RequestMapping(value="/addSales", method=RequestMethod.GET)
 	public String addSales( Model model){
@@ -43,22 +44,23 @@ Item item =new Item();
 		String category = "sales";
 		List<String> itemNameList = itemService.findItemNamebyCategory(category);
 		model.addAttribute("itemNameList",itemNameList);
-		for (int i = 0; i < itemNameList.size(); i++) {
-			System.out.println(itemNameList.get(i));
-		}
+		//for (int i = 0; i < itemNameList.size(); i++) {
+			//System.out.println(itemNameList.get(i));
+		//}
 		
 		List<String> customerList = customerService.findCustomerCodeByCategory(category);
 		model.addAttribute("customerList",customerList);
-		for (int i = 0; i < customerList.size(); i++) {
-			System.out.println(customerList.get(i));
-		}
+		//for (int i = 0; i < customerList.size(); i++) {
+			//System.out.println(customerList.get(i));
+		//}
 		
 		return "common/addSales";		
 	}
 	
 	@RequestMapping(value="/addItem/sales", method=RequestMethod.GET)
 	public String showAddItem(String category, Model model){
-		LOGGER.debug("Rendering addItem page for adding sales Item");	
+		LOGGER.debug("Rendering addItem page for adding sales Item");
+		Item item =new Item();
 		item.setCategory("sales");
 		model.addAttribute("category", item.getCategory());
 		return "common/addItem";		
@@ -73,18 +75,17 @@ Item item =new Item();
 	}
 	
 	@RequestMapping(value = "/saveSales", method = RequestMethod.POST)	
-    public @ResponseBody String saveSales(@RequestBody RestSales[] restSales){
+    public @ResponseBody String saveSales(@RequestBody RestSales[] restSales) throws ParseException{
 		List<Sales> allSales = new ArrayList<>();
 		for(RestSales sale : restSales){			
 			String memoNo = sale.getMemoNo();
 			String customerCode=sale.getCustomerCode();
+			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(sale.getDate());
 			for(Records r: sale.getRecords()){
 				String itemName=r.getItemName();
 				BigDecimal quantity=r.getQuantity();
 				BigDecimal unitPrice=r.getUnitPrice();
-				BigDecimal cash=r.getCash();
-				BigDecimal due=r.getDue();
-				Sales sales = new Sales(memoNo, customerCode, itemName, quantity, unitPrice, cash, due);
+				Sales sales = new Sales(memoNo, customerCode, date, itemName, quantity, unitPrice);
 				allSales.add(sales);
 			}	
 			

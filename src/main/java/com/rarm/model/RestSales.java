@@ -2,13 +2,22 @@ package com.rarm.model;
 
 import java.util.List;
 
-
 public class RestSales {
-	
+
 	private String memoNo;
 
 	private String customerCode;
-	
+
+	private String date;
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	private List<Records> records;
 
 	public String getMemoNo() {
@@ -37,9 +46,8 @@ public class RestSales {
 
 	@Override
 	public String toString() {
-		return "RestSales [memoNo=" + memoNo + ", customerCode=" + customerCode + ", records=" + records + "]";
+		return "RestSales [memoNo=" + memoNo + ", customerCode=" + customerCode + ", date=" + date + ", records="
+				+ records + "]";
 	}
-	
-	
 
 }

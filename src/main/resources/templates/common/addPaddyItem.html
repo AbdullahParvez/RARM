@@ -24,10 +24,7 @@
 						<fieldset>
 
 							<!-- Form Name -->
-							<legend>Add Item</legend>
-
-							<input type="hidden" id="category" name="category"
-								th:value="${category}"></input>
+							<legend>Add Item Paddy</legend>
 
 							<!-- Text input-->
 							<div class="form-group">
@@ -35,6 +32,16 @@
 									Name</label>
 								<div class="col-md-4">
 									<input id="itemName" name="itemName" type="text" placeholder=""
+										class="form-control input-md" required="required"></input>
+
+								</div>
+							</div>
+							
+							<!-- Text input-->
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="category">Category</label>
+								<div class="col-md-4">
+									<input id="category" name="category" type="text" placeholder=""
 										class="form-control input-md" required="required"></input>
 
 								</div>

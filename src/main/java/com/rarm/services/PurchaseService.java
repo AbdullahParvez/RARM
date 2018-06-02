@@ -7,5 +7,7 @@ import com.rarm.model.Purchase;
 public interface PurchaseService {
 	
 	List<Purchase> save(List<Purchase> allPurchase);
+	
+	List<Purchase> findAllPurchase();
 
 }

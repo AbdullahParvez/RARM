@@ -8,81 +8,177 @@
 <title>New Expense</title>
 <link rel="stylesheet" href="css/dashboard.css"
 	th:href="@{/css/dashboard.css}"></link>
+<link rel="stylesheet"
+	href="webjars/font-awesome/4.7.0/css/font-awesome.css"
+	th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}" ></link>
 </head>
 
 <body>
 
 	<div layout:fragment="content">
 
-		<div class="container-fluid">
+		<div class="container-fluid" id="app">
 			<div class="row">
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<pre>{{ $data }}</pre>
 
 					<form class="form-horizontal">
-						<fieldset>
+						<div v-for="(item, itemIndex) in items"
+							style="margin-bottom: 2em;">
+							<fieldset>
 
-							<!-- Form Name -->
-							<legend>Add Expense</legend>
-							
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="transactionNo">Serial
-									No.</label>
-								<div class="col-md-4">
-									<input id="transactionNo" name="transactionNo" type="text" placeholder=""
-										class="form-control input-md" required="required"></input>
+								<!-- Form Name -->
+								<legend>Add Expense</legend>
 
+								<!-- Text input-->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="memoNo">Memo
+										No.</label>
+									<div class="col-md-4">
+										<input id="memoNo" name="memoNo" type="text" placeholder=""
+											v-model="item.memoNo" class="form-control input-md"
+											required="required"></input>
+
+									</div>
 								</div>
-							</div>
 
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="sector">Expense Sector
-									</label>
-								<div class="col-md-4">
-									<input id="sector" name="sector" type="text" placeholder=""
-										class="form-control input-md" required="required"></input>
+								<div class="row" v-for="(record, index) in item.records">
 
+									<!-- Text input-->
+									<div class="form-group">
+										<label class="col-md-2 control-label" for="expenseSector">Expense Sector</label>
+										<div class="col-md-2">
+											<select name="expenseSector" id="expenseSector"
+												v-model="record.expenseSector" class="form-control">
+												<option value="">Select Expense Sector</option>
+												<option th:each="sector : ${expenseSectorList}"
+													th:value="${sector}" th:text="${sector}"></option>
+											</select>
+
+										</div>
+
+										<div>
+											Do you want to <a th:href="@{/addExpenseSector}">Add
+												Expense Sector</a>
+										</div>
+									</div>
+
+									<!-- Text input-->
+									<div class="form-group">
+										<label class="col-md-4 control-label" for="amount">Amount</label>
+										<div class="col-md-4">
+											<input id="amount" name="amount" type="text" placeholder="0"
+												v-model="record.amount" class="form-control input-md"></input>
+
+										</div>
+									</div>
+
+									<!-- Textarea -->
+									<div class="form-group">
+										<label class="col-md-4 control-label" for="description">Description</label>
+										<div class="col-md-4">
+											<textarea class="form-control" id="description"
+												name="description" v-model="record.description"></textarea>
+										</div>
+									</div>
+								
+
+									<div class="form-group">
+										<div class="col-md-1" v-if="showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-info form-control"
+												v-on:click.prevent="addNewRecord(item)">
+												<i class="fa fa-plus-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+										<div class="col-md-1" v-if="!showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-danger form-control"
+												v-on:click.prevent="removeRecord(item, index)">
+												<i class="fa fa-minus-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+									</div>
 								</div>
-							</div>
-							
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="amount">Amount</label>
-								<div class="col-md-4">
-									<input id="amount" name="amount" type="text"
-										placeholder="0" class="form-control input-md"></input>
 
+								<!-- Button -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submit"></label>
+									<div class="col-md-4">
+										<button id="submit" name="submit" class="btn btn-primary"
+											v-on:click.prevent="submit()">Submit</button>
+									</div>
 								</div>
-							</div>
-							
-							<!-- Textarea -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="description">Description</label>
-								<div class="col-md-4">
-									<textarea class="form-control" id="description"
-										name="description"></textarea>
-								</div>
-							</div>
 
-							<!-- Button -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="submit"></label>
-								<div class="col-md-4">
-									<button id="submit" name="submit" class="btn btn-primary">Submit</button>
-								</div>
-							</div>
 
-						</fieldset>
+
+
+							</fieldset>
+						</div>
 					</form>
-					
+
 					<div>
-					<a th:href="@{/}">Home</a>
+						<a th:href="@{/}">Home</a>
 					</div>
 
 				</div>
 			</div>
 		</div>
+
+	</div>
+
+	<div layout:fragment="custom-scripts">
+		<!-- Page specific script goes here -->
+		<script src="webjars/vue/2.5.13/vue.js"
+			th:src="@{/webjars/vue/2.5.13/vue.js}"></script>
+		<script src="webjars/axios/0.17.1/dist/axios.js"
+			th:src="@{/webjars/axios/0.17.1/dist/axios.js}"></script>
+
+		<script>
+			new Vue({
+				el : '#app',
+				data : {
+					items : [ {
+						memoNo : '',
+						records : [ {
+							expenseSector : 0,
+							amount : 0,
+							description : 0
+						} ]
+					} ]
+				},
+				methods : {
+					addNewRecord : function(item) {
+						var record = {
+							expenseSector : 0,
+							amount : 0,
+							description : 0
+						}
+						item.records.push(record);
+					},
+					removeRecord : function(item, recordIndex) {
+						return item.records.splice(recordIndex, 1);
+					},
+					showAddRecordBtn : function(item, recordIndex) {
+						return recordIndex === this.items[this.items
+								.indexOf(item)].records.length - 1;
+					},
+
+					submit : function() {
+						var self = this;
+
+						axios.post('/saveExpense', self.items)
+						.then(function (response) {
+						    console.log(response);
+						    window.location.replace('/');
+						})
+						.catch(function (error) {
+						    console.log(error);
+						});
+					}
+				}
+			});
+		</script>
 
 	</div>
 

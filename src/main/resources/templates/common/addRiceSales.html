@@ -13,9 +13,9 @@
 <link rel="stylesheet"
 	href="webjars/font-awesome/4.7.0/css/font-awesome.css"
 	th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}"></link>
-<link rel="stylesheet"
+<!--  <link rel="stylesheet"
 	href="webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css"
-	th:href="@{/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css}"></link>
+	th:href="@{/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css}"></link>-->
 
 </head>
 
@@ -50,12 +50,12 @@
 
 								<!-- Text input-->
 								<div class="form-group">
-									<label class="col-md-2 control-label" for="companyCode">Customer
+									<label class="col-md-2 control-label" for="companyCode">Customer/Company
 										Code</label>
 									<div class="col-md-2">
 										<select name="companyCode" id="companyCode"
 											v-model="item.companyCode" class="form-control">
-											<option value="">Select Company Code</option>
+											<option value="">Select Customer/Company Code</option>
 											<option th:each="code : ${companyList}" th:value="${code}"
 												th:text="${code}"></option>
 										</select>
@@ -167,12 +167,12 @@
 			th:src="@{/webjars/vue/2.5.13/vue.js}"></script>
 		<script src="webjars/axios/0.17.1/dist/axios.js"
 			th:src="@{/webjars/axios/0.17.1/dist/axios.js}"></script>
-<!-- 		<script src="js/vue-datepicker-local.css"
-			th:src="@{/js/vue-datepicker-local.css}"></script>-->
-			<script src="https://cdn.jsdelivr.net/npm/vue-datepicker-local@1.0.14/dist/vue-datepicker-local.js"></script>
+		<script src="js/vue-datepicker-local.js"
+			th:src="@{/js/vue-datepicker-local.js}"></script>
+			<!-- <script src="https://cdn.jsdelivr.net/npm/vue-datepicker-local@1.0.14/dist/vue-datepicker-local.js"></script>
 		<script
 			src="webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"
-			th:src="@{/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js}"></script>
+			th:src="@{/webjars/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js}"></script>-->
 
 		<script>
 		new Vue({

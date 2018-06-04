@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "sales")
@@ -21,8 +22,8 @@ public class Sales extends BaseEntity<Long> {
 	@Column(name = "memoNo", length = 100, nullable = false)
 	private String memoNo;
 
-	@Column(name = "customerCode", length = 100, nullable = false)
-	private String customerCode;
+	@Column(name = "companyCode", length = 100, nullable = false)
+	private String companyCode;
 
 	@Column(name = "date", length = 100, nullable = false)
 	private Date date;
@@ -36,28 +37,55 @@ public class Sales extends BaseEntity<Long> {
 	@Column(name = "unitPrice", length = 20, nullable = false)
 	private BigDecimal unitPrice;
 
+	@Transient
+	private BigDecimal totalPrice;
+
+	@Transient
+	private Date insertDate;
+
 	public Sales() {
 
 	}
 
-	public Sales(String memoNo, String customerCode, Date date, String itemName, BigDecimal quantity,
+	public Sales(String memoNo, String companyCode, Date date, String itemName, BigDecimal quantity,
 			BigDecimal unitPrice) {
 		super();
 		this.memoNo = memoNo;
-		this.customerCode = customerCode;
+		this.companyCode = companyCode;
 		this.date = date;
 		this.itemName = itemName;
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 	}
 
-	public String getCustomerCode() {
-		return customerCode;
+	public Sales(String memoNo, String companyCode, Date date, String itemName, BigDecimal quantity,
+			BigDecimal unitPrice, BigDecimal totalPrice, Date insertDate) {
+		super();
+		this.memoNo = memoNo;
+		this.companyCode = companyCode;
+		this.date = date;
+		this.itemName = itemName;
+		this.quantity = quantity;
+		this.unitPrice = unitPrice;
+		this.totalPrice = totalPrice;
+		this.insertDate = insertDate;
+	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public Date getDate() {
+		return date;
 	}
 
 	@Override
 	public Long getId() {
 		return id;
+	}
+
+	public Date getInsertDate() {
+		return insertDate;
 	}
 
 	public String getItemName() {
@@ -72,16 +100,28 @@ public class Sales extends BaseEntity<Long> {
 		return quantity;
 	}
 
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setCustomerCode(String customerCode) {
-		this.customerCode = customerCode;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
 	}
 
 	public void setItemName(String itemName) {
@@ -96,14 +136,18 @@ public class Sales extends BaseEntity<Long> {
 		this.quantity = quantity;
 	}
 
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
 	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
 	@Override
 	public String toString() {
-		return "Sales [memoNo=" + memoNo + ", customerCode=" + customerCode + ", date=" + date + ", itemName="
-				+ itemName + ", quantity=" + quantity + ", unitPrice=" + unitPrice + "]";
+		return "Sales [memoNo=" + memoNo + ", companyCode=" + companyCode + ", date=" + date + ", itemName=" + itemName
+				+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + "]";
 	}
 
 }

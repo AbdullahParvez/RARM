@@ -50,6 +50,9 @@ private CompanyService companyService;
 			
 		case "riceSales":
 			return "redirect:/addRiceSales";
+		
+		case "sales":
+			return "redirect:/addSales";
 
 		default:
 			return "home";

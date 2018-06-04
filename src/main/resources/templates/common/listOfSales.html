@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/main">
+<head>
+<meta charset="UTF-8"></meta>
+<link rel="stylesheet" href="css/dashboard.css"
+	th:href="@{/css/dashboard.css}"></link>
+<title>List of Sales</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid" id="ars">
+			<div class="row">
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+					<table class="table">
+
+						<thead>
+							<tr>
+								<th scope="col">Memo No</th>
+								<th scope="col">Company Code</th>
+								<th scope="col">Item name</th>
+								<th scope="col">Quantity(Bag)</th>
+								<th scope="col">Rate</th>
+								<th scope="col">Total Price(Taka)</th>
+								<th scope="col">Date</th>
+								<th scope="col">Insert Date</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="s : ${sales}">
+								<td th:text="${s.memoNo}"></td>
+								<td th:text="${s.companyCode}"></td>
+								<td th:text="${s.itemName}"></td>
+								<td th:text="${s.quantity}"></td>
+								<td th:text="${s.unitPrice}"></td>
+								<td th:text="${s.totalPrice}"></td>
+								<td th:text="${#dates.format(s.date, 'dd-MMM-yyyy')}"></td>
+								<td th:text="${#dates.format(s.insertDate, 'dd-MMM-yyyy')}"></td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

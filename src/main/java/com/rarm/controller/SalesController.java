@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.rarm.model.Item;
 import com.rarm.model.Records;
 import com.rarm.model.RestSales;
+import com.rarm.model.RiceSales;
 import com.rarm.model.Sales;
-import com.rarm.services.CustomerService;
+import com.rarm.services.CompanyService;
 import com.rarm.services.ItemService;
 import com.rarm.services.SalesService;
 
@@ -33,7 +34,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(SalesController.cla
 ItemService itemService;
 
 @Autowired
-CustomerService customerService;
+CompanyService companyService;
 
 @Autowired
 SalesService salesService;
@@ -48,8 +49,8 @@ SalesService salesService;
 			//System.out.println(itemNameList.get(i));
 		//}
 		
-		List<String> customerList = customerService.findCustomerCodeByCategory(category);
-		model.addAttribute("customerList",customerList);
+		List<String> companyList = companyService.findCompanyCodeByCategory(category);
+		model.addAttribute("companyList",companyList);
 		//for (int i = 0; i < customerList.size(); i++) {
 			//System.out.println(customerList.get(i));
 		//}
@@ -66,12 +67,12 @@ SalesService salesService;
 		return "common/addItem";		
 	}
 	
-	@RequestMapping(value="/addCustomer/sales", method=RequestMethod.GET)
+	@RequestMapping(value="/addCompany/sales", method=RequestMethod.GET)
 	public String addSalesCustomer(String category, Model model){
 		LOGGER.debug("Rendering addCustomer page for adding sales Customer");	
 		category = "sales"; 
 		model.addAttribute("category", category);
-		return "common/addCustomer";		
+		return "common/addCompany";		
 	}
 	
 	@RequestMapping(value = "/saveSales", method = RequestMethod.POST)	
@@ -93,5 +94,14 @@ SalesService salesService;
 		salesService.save(allSales);
 		return "home";
     }
+	
+	@RequestMapping(value = "/getAllSales", method = RequestMethod.GET)
+	public String getAllRiceSales(Model model) {
+		List<Sales> sales = salesService.findAllSales();
+
+		model.addAttribute("sales", sales);
+
+		return "common/listOfSales";
+	}
 
 }

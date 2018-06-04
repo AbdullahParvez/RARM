@@ -52,7 +52,7 @@
 										<select name="companyCode" id="companyCode"
 											v-model="item.customerCode" class="form-control">
 											<option value="">Select Customer/Company Code</option>
-											<option th:each="code : ${customerList}" th:value="${code}"
+											<option th:each="code : ${companyList}" th:value="${code}"
 												th:text="${code}"></option>
 										</select>
 

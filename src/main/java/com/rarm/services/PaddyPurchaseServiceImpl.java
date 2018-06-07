@@ -48,7 +48,7 @@ public class PaddyPurchaseServiceImpl implements PaddyPurchaseService {
 			finalListPaddyPurchase.add(paddyPurchase);
 		}
 				
-				return finalListPaddyPurchase;
+				return temporaryListPaddyPurchase;
 	}
 
 }

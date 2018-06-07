@@ -40,9 +40,9 @@
 								<td th:text="${pp.quantityKG}"></td>
 								<td th:text="${pp.unitPricePerMon}"></td>
 								<td th:text="${pp.totalSackPrice}"></td>
-								<td th:text="${pp.totalPrice}"></td>
+								<td th:text="${pp.quantityKG*pp.unitPricePerMon+pp.totalSackPrice}"></td>
 								<td th:text="${#dates.format(pp.date, 'dd-MMM-yyyy')}"></td>
-								<td th:text="${#dates.format(pp.insertDate, 'dd-MMM-yyyy')}"></td>
+								<td th:text="${#dates.format(pp.createdDate, 'dd-MMM-yyyy')}"></td>
 
 							</tr>
 						</tbody>

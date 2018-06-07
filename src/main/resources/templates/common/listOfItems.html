@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/main">
+<head>
+<meta charset="UTF-8"></meta>
+<link rel="stylesheet" href="css/dashboard.css"
+	th:href="@{/css/dashboard.css}"></link>
+<title>List of Sales</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid" id="ars">
+			<div class="row">
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+					<table class="table">
+
+						<thead>
+							<tr>
+								<th scope="col">Item name</th>	
+								<th scope="col">Unit</th>
+								<th scope="col">Metric Type</th>
+								<th scope="col">Category</th>
+								<th scope="col">Description</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="i : ${items}">
+								<td th:text="${i.itemName}"></td>
+								<td th:text="${i.unitValue}"></td>
+								<td th:text="${i.metricType}"></td>
+								<td th:text="${i.category}"></td>
+								<td th:text="${i.description}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

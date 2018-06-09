@@ -32,5 +32,10 @@ public class ItemServiceImpl implements ItemService {
 		return items;
 	}
 
+	@Override
+	public List<String> findProductionItem(String category1, String category2) {
+		return itemRepository.findProductionItem(category1, category2);
+	}
+
 
 }

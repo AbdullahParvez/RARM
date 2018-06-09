@@ -34,6 +34,19 @@
 
 								</div>
 							</div>
+							
+							<div class="form-group">
+										<label class="col-md-2 control-label" for="itemName">Item
+											Name</label>
+										<div class="col-md-2">
+											<select name="itemName" id="itemName"
+												v-model="record.itemName" class="form-control">
+												<option value="">Select Name</option>
+												<option th:each="name : ${itemNameList}" th:value="${name}"
+													th:text="${name}"></option>
+											</select>
+										</div>
+									</div>
 
 							<!-- Text input-->
 							<div class="form-group">

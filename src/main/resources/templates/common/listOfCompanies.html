@@ -20,21 +20,20 @@
 
 						<thead>
 							<tr>
-								<th scope="col">Item name</th>	
-								<th scope="col">Unit</th>
-								<th scope="col">Metric Type</th>
+								<th scope="col">Company/Customer name</th>	
+								<th scope="col">Company/Customer code</th>
+								<th scope="col">Address</th>
+								<th scope="col">Mobile</th>
 								<th scope="col">Category</th>
-								<th scope="col">Description</th>
-
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="i : ${items}">
-								<td th:text="${i.itemName}"></td>
-								<td th:text="${i.unitValue}"></td>
-								<td th:text="${i.metricType}"></td>
-								<td th:text="${i.category}"></td>
-								<td th:text="${i.description}"></td>
+							<tr th:each="c:${companies}">
+								<td th:text="${c.name}"></td>
+								<td th:text="${c.codeNumber}"></td>
+								<td th:text="${c.address}"></td>
+								<td th:text="${c.mobile}"></td>
+								<td th:text="${c.category}"></td>
 							</tr>
 						</tbody>
 					</table>

@@ -26,4 +26,10 @@ public class CompanyServiceImpl implements CompanyService{
 		return companyRepository.findCompanyCodeByCategory(category);
 	}
 
+	@Override
+	public List<Company> findAllItems() {
+		List<Company> companies = companyRepository.findAll();
+		return companies;
+	}
+
 }

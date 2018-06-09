@@ -23,7 +23,7 @@ public class Company extends BaseEntity<Long> {
 	@Column(name = "codeNumber", length = 100, nullable = false, unique = true)
 	private String codeNumber;
 
-	@Column(name = "content")
+	@Column(name = "address")
 	@Type(type = "text")
 	private String address;
 

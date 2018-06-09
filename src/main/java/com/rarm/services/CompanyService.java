@@ -12,4 +12,6 @@ public interface CompanyService {
 	
 	List<String>findCompanyCodeByCategory(@Param("category")String category);
 
+	List<Company> findAllItems();
+
 }

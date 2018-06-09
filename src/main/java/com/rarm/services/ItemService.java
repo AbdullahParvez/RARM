@@ -13,5 +13,7 @@ public interface ItemService {
 	List<String>findItemNamebyCategory(@Param("category")String category);
 
 	List<Item> findAllItems();
+	
+	List<String>findProductionItem(@Param("category")String category1, @Param("category")String category2);
 
 }

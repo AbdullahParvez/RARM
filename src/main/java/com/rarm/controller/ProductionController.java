@@ -1,5 +1,10 @@
 package com.rarm.controller;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,19 +12,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.rarm.model.Production;
+import com.rarm.model.RecordsProduction;
+import com.rarm.model.RestProduction;
 import com.rarm.services.ItemService;
+import com.rarm.services.ProductionService;
 
 
 @Controller
 public class ProductionController {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(RiceSalesController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductionController.class);
 	
 	@Autowired
 	ItemService itemService;
+	
+	@Autowired
+	ProductionService productionService;
 	
 	@RequestMapping(value = "/addProduction", method = RequestMethod.GET)
 	public String addProduction(Model model){
@@ -36,5 +50,33 @@ public class ProductionController {
 		return "common/addProduction";
 
 	}
+	
+	@RequestMapping(value = "/saveProduction", method = RequestMethod.POST)
+	public @ResponseBody String saveProduction(@RequestBody RestProduction[] restProduction) throws ParseException {
+		List<Production> allProduction = new ArrayList<>();
+		for (RestProduction rp : restProduction) {
+	
+			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(rp.getDate());
+			for (RecordsProduction r : rp.getRecords()) {
+				String itemName = r.getItemName();
+				BigDecimal quantity = r.getQuantity();
+				Production production = new Production(itemName, quantity, date);
+				allProduction.add(production);
+			}
+
+		}
+		productionService.save(allProduction);
+		return "redirect:/getAllProduction";
+	}
+	
+	@RequestMapping(value = "/getAllProduction", method = RequestMethod.GET)
+	public String getAllRiceSales(Model model) {
+		List<Production> production = productionService.findAllProduction();
+
+		model.addAttribute("production", production);
+
+		return "common/listOfProduction";
+	}
+
 
 }

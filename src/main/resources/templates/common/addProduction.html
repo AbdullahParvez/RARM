@@ -8,75 +8,164 @@
 <title>Add Production</title>
 <link rel="stylesheet" href="css/dashboard.css"
 	th:href="@{/css/dashboard.css}"></link>
+<link rel="stylesheet" href="css/vue-datepicker-local.css"
+	th:href="@{/css/vue-datepicker-local.css}"></link>
+<link rel="stylesheet"
+	href="webjars/font-awesome/4.7.0/css/font-awesome.css"
+	th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}"></link>
 </head>
 
 <body>
 
 	<div layout:fragment="content">
 
-		<div class="container-fluid">
+		<div class="container-fluid" id="app">
 			<div class="row">
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-					<form class="form-horizontal">
-						<fieldset>
+					<form class="form-horizontal" action="javascript:void(0)">
+						<div v-for="(item, itemIndex) in items"
+							style="margin-bottom: 2em;">
+							<fieldset>
 
-							<!-- Form Name -->
-							<legend>Add Production</legend>
+								<!-- Form Name -->
+								<legend>Add Production</legend>
 
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="itemName">Item
-									Name</label>
-								<div class="col-md-4">
-									<input id="itemName" name="itemName" type="text" placeholder=""
-										class="form-control input-md" required="required"></input>
 
+								<div class="form-group">
+
+									<label class="col-md-2 control-label" for="date">Date</label>
+									<vue-datepicker-local v-model="item.date" format="DD-MM-YYYY"
+										:local="local"></vue-datepicker-local>
 								</div>
-							</div>
-							
-							<div class="form-group">
-										<label class="col-md-2 control-label" for="itemName">Item
-											Name</label>
+								
+								<div class="row" v-for="(record, index) in item.records">
+
+								<!-- Text input-->
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="itemName">Item
+										Name</label>
+									<div class="col-md-2">
+										<select name="itemName" id="itemName"
+											v-model="record.itemName" class="form-control">
+											<option value="">Select Name</option>
+											<option th:each="name : ${itemNameList}" th:value="${name}"
+												th:text="${name}"></option>
+										</select>
+									</div>
+								</div>
+
+								<!-- Text input-->
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="quantity">Quantity(Bag)</label>
 										<div class="col-md-2">
-											<select name="itemName" id="itemName"
-												v-model="record.itemName" class="form-control">
-												<option value="">Select Name</option>
-												<option th:each="name : ${itemNameList}" th:value="${name}"
-													th:text="${name}"></option>
-											</select>
+											<input name="quantity" id="quantity"
+												v-model="record.quantity" type="number" placeholder="0"
+												class="form-control input-md"></input>
+										</div>
+								</div>
+								
+								
+								<div class="form-group">
+										<div class="col-md-1" v-if="showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-info form-control"
+												v-on:click.prevent="addNewRecord(item)">
+												<i class="fa fa-plus-circle" aria-hidden="true"></i>
+											</button>
+										</div>
+										<div class="col-md-1" v-if="!showAddRecordBtn(item, index)">
+											<label></label>
+											<button class="btn btn-danger form-control"
+												v-on:click.prevent="removeRecord(item, index)">
+												<i class="fa fa-minus-circle" aria-hidden="true"></i>
+											</button>
 										</div>
 									</div>
-
-							<!-- Text input-->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="amount">Total
-									Amount(Unit)</label>
-								<div class="col-md-4">
-									<input id="amount" name="amount" type="text" placeholder="0"
-										class="form-control input-md"></input>
-
+								
 								</div>
-							</div>
 
-							<!-- Button -->
-							<div class="form-group">
-								<label class="col-md-4 control-label" for="submit"></label>
-								<div class="col-md-4">
-									<button id="submit" name="submit" class="btn btn-primary">Submit</button>
+								<!-- Button -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submit"></label>
+									<div class="col-md-4">
+										<button id="submit" name="submit" class="btn btn-primary"
+											v-on:click.prevent="submit()">Submit</button>
+									</div>
 								</div>
-							</div>
 
-						</fieldset>
+							</fieldset>
+						</div>
 					</form>
-					
+
 					<div>
-					<a th:href="@{/}">Home</a>
+						<a th:href="@{/}">Home</a>
 					</div>
 
 				</div>
 			</div>
 		</div>
+
+	</div>
+
+	<div layout:fragment="custom-scripts">
+		<!-- Page specific script goes here -->
+		<script src="webjars/vue/2.5.13/vue.js"
+			th:src="@{/webjars/vue/2.5.13/vue.js}"></script>
+		<script src="webjars/axios/0.17.1/dist/axios.js"
+			th:src="@{/webjars/axios/0.17.1/dist/axios.js}"></script>
+		<script src="js/vue-datepicker-local.js"
+			th:src="@{/js/vue-datepicker-local.js}"></script>
+
+		<script>
+		new Vue({
+            el : '#app',
+            data : {
+                local: {
+                    dow: 0, // Sunday is the first day of the week
+                    monthsHead: 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
+                    months: 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
+                    weeks: 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_')
+                },
+                items : [ {
+                    date : new Date(),
+                    records : [ {
+                        itemName : 0,
+                        quantity : 0
+                    } ]
+                } ]
+            },
+            methods : {
+                addNewRecord : function(item) {
+                    var record = {
+                        itemName : 0,
+                        quantity : 0
+                    }
+                    item.records.push(record);
+                },
+                removeRecord : function(item, recordIndex) {
+                    return item.records.splice(recordIndex, 1);
+                },
+                showAddRecordBtn : function(item, recordIndex) {
+                    return recordIndex === this.items[this.items
+                            .indexOf(item)].records.length - 1;
+                },
+
+                submit : function() {
+                    var self = this;
+
+                    axios.post('/saveProduction', self.items)
+                    .then(function (response) {                        
+                        console.log(response);
+                        window.location.replace('/');
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+        })
+		</script>
 
 	</div>
 

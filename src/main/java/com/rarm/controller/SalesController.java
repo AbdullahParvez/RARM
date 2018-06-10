@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.rarm.model.Item;
 import com.rarm.model.Records;
 import com.rarm.model.RestSales;
-import com.rarm.model.RiceSales;
 import com.rarm.model.Sales;
 import com.rarm.services.CompanyService;
 import com.rarm.services.ItemService;

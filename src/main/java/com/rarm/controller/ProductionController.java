@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rarm.model.Production;
-import com.rarm.model.RecordsProduction;
-import com.rarm.model.RestProduction;
+import com.rarm.model.RecordsStorage;
+import com.rarm.model.RestStorage;
 import com.rarm.services.ItemService;
 import com.rarm.services.ProductionService;
 
@@ -39,9 +39,9 @@ public class ProductionController {
 	public String addProduction(Model model){
 		LOGGER.debug("Rendering addproduction page");
 		
-		String category1 = "riceSales";
-		String category2 = "sales";
-		List<String> itemNameList = itemService.findProductionItem(category1,category2);
+		String category1 = "Rice";
+		String category2 = "Sales";
+		List<String> itemNameList = itemService.findItems(category1,category2);
 		model.addAttribute("itemNameList", itemNameList);
 		for (int i = 0; i < itemNameList.size(); i++) {
 			System.out.println(itemNameList.get(i));
@@ -52,12 +52,12 @@ public class ProductionController {
 	}
 	
 	@RequestMapping(value = "/saveProduction", method = RequestMethod.POST)
-	public @ResponseBody String saveProduction(@RequestBody RestProduction[] restProduction) throws ParseException {
+	public @ResponseBody String saveProduction(@RequestBody RestStorage[] restProduction) throws ParseException {
 		List<Production> allProduction = new ArrayList<>();
-		for (RestProduction rp : restProduction) {
+		for (RestStorage rp : restProduction) {
 	
 			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(rp.getDate());
-			for (RecordsProduction r : rp.getRecords()) {
+			for (RecordsStorage r : rp.getRecords()) {
 				String itemName = r.getItemName();
 				BigDecimal quantity = r.getQuantity();
 				Production production = new Production(itemName, quantity, date);

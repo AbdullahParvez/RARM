@@ -34,7 +34,7 @@ public class PaddyPurchaseController {
 	@RequestMapping(value = "/paddyPurchase", method = RequestMethod.GET)
 	public String addPaddyPurchase(Model model) {
 		LOGGER.debug("Rendering paddyPurchase page");
-		String category = "paddyPurchase";
+		String category = "Paddy";
 
 		List<String> companyList = companyService.findCompanyCodeByCategory(category);
 		model.addAttribute("companyList", companyList);
@@ -48,7 +48,7 @@ public class PaddyPurchaseController {
 	@RequestMapping(value = "/addCompany/paddyPurchase", method = RequestMethod.GET)
 	public String addpurchaseCompany(String category, Model model) {
 		LOGGER.debug("Rendering addCompany page for adding purchase Company");
-		category = "paddyPurchase";
+		category = "Paddy";
 		model.addAttribute("category", category);
 		return "common/addCompany";
 	}
@@ -59,13 +59,14 @@ public class PaddyPurchaseController {
 		LOGGER.debug("Saving new paddyPurchase");
 		String memoNo = request.getParameter("memoNo");
 		String companyCode = request.getParameter("companyCode");
+		String itemName = "Paddy";
 		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("date"));
 		BigDecimal quantitySack = new BigDecimal(request.getParameter("quantitySack"));
 		BigDecimal quantityKG = new BigDecimal(request.getParameter("quantityKG"));
 		BigDecimal unitPricePerMon = new BigDecimal(request.getParameter("unitPricePerMon"));
 		BigDecimal totalSackPrice = new BigDecimal(request.getParameter("totalSackPrice"));
 
-		PaddyPurchase paddyPurchase = new PaddyPurchase(memoNo, companyCode, date, quantitySack, quantityKG,
+		PaddyPurchase paddyPurchase = new PaddyPurchase(memoNo, companyCode, itemName, date, quantitySack, quantityKG,
 				unitPricePerMon, totalSackPrice);
 		paddyPurchaseService.save(paddyPurchase);
 

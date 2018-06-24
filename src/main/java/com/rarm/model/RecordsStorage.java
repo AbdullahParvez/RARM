@@ -2,7 +2,7 @@ package com.rarm.model;
 
 import java.math.BigDecimal;
 
-public class RecordsProduction {
+public class RecordsStorage {
 	private String itemName;
 	private BigDecimal quantity;
 	public String getItemName() {

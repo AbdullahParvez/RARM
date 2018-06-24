@@ -26,7 +26,7 @@ public class PaddyPurchase extends BaseEntity<Long> {
 	private String companyCode;
 	
 	@Column(name = "itemName", length = 100, nullable = false)
-	private String itemName = "Paddy";
+	private String itemName;
 
 	@Column(name = "date", length = 100, nullable = false)
 	private Date date;
@@ -53,11 +53,12 @@ public class PaddyPurchase extends BaseEntity<Long> {
 
 	}
 
-	public PaddyPurchase(String memoNo, String companyCode, Date date, BigDecimal quantitySack, BigDecimal quantityKG,
+	public PaddyPurchase(String memoNo, String companyCode, String itemName, Date date, BigDecimal quantitySack, BigDecimal quantityKG,
 			BigDecimal unitPricePerMon, BigDecimal totalSackPrice) {
 		super();
 		this.memoNo = memoNo;
 		this.companyCode = companyCode;
+		this.itemName = itemName;
 		this.date = date;
 		this.quantitySack = quantitySack;
 		this.quantityKG = quantityKG;

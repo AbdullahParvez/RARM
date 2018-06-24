@@ -41,7 +41,7 @@ SalesService salesService;
 	@RequestMapping(value="/addSales", method=RequestMethod.GET)
 	public String addSales( Model model){
 		LOGGER.debug("Rendering addSales page");		
-		String category = "sales";
+		String category = "Sales";
 		List<String> itemNameList = itemService.findItemNamebyCategory(category);
 		model.addAttribute("itemNameList",itemNameList);
 		//for (int i = 0; i < itemNameList.size(); i++) {
@@ -61,7 +61,7 @@ SalesService salesService;
 	public String showAddItem(String category, Model model){
 		LOGGER.debug("Rendering addItem page for adding sales Item");
 		Item item =new Item();
-		item.setCategory("sales");
+		item.setCategory("Sales");
 		model.addAttribute("category", item.getCategory());
 		return "common/addItem";		
 	}
@@ -69,7 +69,7 @@ SalesService salesService;
 	@RequestMapping(value="/addCompany/sales", method=RequestMethod.GET)
 	public String addSalesCustomer(String category, Model model){
 		LOGGER.debug("Rendering addCustomer page for adding sales Customer");	
-		category = "sales"; 
+		category = "Sales"; 
 		model.addAttribute("category", category);
 		return "common/addCompany";		
 	}

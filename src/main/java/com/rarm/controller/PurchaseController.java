@@ -43,7 +43,7 @@ public class PurchaseController {
 	@RequestMapping(value = "/addPurchase", method = RequestMethod.GET)
 	public String addPurchase(Model model) {
 		LOGGER.debug("Rendering addPurchase page");
-		String category = "purchase";
+		String category = "Purchase";
 		List<String> itemNameList = itemService.findItemNamebyCategory(category);
 		model.addAttribute("itemNameList", itemNameList);
 		for (int i = 0; i < itemNameList.size(); i++) {
@@ -64,7 +64,7 @@ public class PurchaseController {
 		LOGGER.debug("Rendering addItem page for adding purchase Item");
 		//item.setCategory("purchase");
 		//model.addAttribute("category", item.getCategory());
-		category = "purchase";
+		category = "Purchase";
 		model.addAttribute("category", category);
 		
 		return "common/addItem";
@@ -73,7 +73,7 @@ public class PurchaseController {
 	@RequestMapping(value = "/addCompany/purchase", method = RequestMethod.GET)
 	public String addpurchaseCompany(String category, Model model) {
 		LOGGER.debug("Rendering addCompany page for adding purchase Company");
-		category = "purchase";
+		category = "Purchase";
 		model.addAttribute("category", category);
 		return "common/addCompany";
 	}

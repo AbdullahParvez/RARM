@@ -2,10 +2,10 @@ package com.rarm.model;
 
 import java.util.List;
 
-public class RestProduction {
+public class RestStorage {
 
 	private String date;
-	private List<RecordsProduction> records;
+	private List<RecordsStorage> records;
 
 	public String getDate() {
 		return date;
@@ -15,11 +15,11 @@ public class RestProduction {
 		this.date = date;
 	}
 
-	public List<RecordsProduction> getRecords() {
+	public List<RecordsStorage> getRecords() {
 		return records;
 	}
 
-	public void setRecords(List<RecordsProduction> records) {
+	public void setRecords(List<RecordsStorage> records) {
 		this.records = records;
 	}
 

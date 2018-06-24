@@ -1,6 +1,7 @@
 package com.rarm.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usageItem")
+@Table(name = "usedItem")
 public class Usage extends BaseEntity<Long> {
 
 	@Id
@@ -23,14 +24,22 @@ public class Usage extends BaseEntity<Long> {
 	@Column(name = "quantity", length = 20, nullable = false)
 	private BigDecimal quantity;
 
+	@Column(name = "date", length = 100, nullable = false)
+	private Date date;
+
 	public Usage() {
 
 	}
 
-	public Usage(String itemName, BigDecimal quantity) {
+	public Usage(String itemName, BigDecimal quantity, Date date) {
 		super();
 		this.itemName = itemName;
 		this.quantity = quantity;
+		this.date = date;
+	}
+
+	public Date getDate() {
+		return date;
 	}
 
 	@Override
@@ -44,6 +53,10 @@ public class Usage extends BaseEntity<Long> {
 
 	public BigDecimal getQuantity() {
 		return quantity;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setId(Long id) {

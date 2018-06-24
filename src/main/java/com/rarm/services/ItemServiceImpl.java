@@ -33,7 +33,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public List<String> findProductionItem(String category1, String category2) {
+	public List<String> findItems(String category1, String category2) {
 		return itemRepository.findProductionItem(category1, category2);
 	}
 

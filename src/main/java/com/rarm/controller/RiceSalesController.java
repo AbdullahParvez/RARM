@@ -41,7 +41,7 @@ public class RiceSalesController {
 	@RequestMapping(value = "/addRiceSales", method = RequestMethod.GET)
 	public String addRiceSales(Model model) {
 		LOGGER.debug("Rendering addRiceSales page");
-		String category = "riceSales";
+		String category = "Rice";
 		List<String> itemNameList = itemService.findItemNamebyCategory(category);
 		model.addAttribute("itemNameList", itemNameList);
 		for (int i = 0; i < itemNameList.size(); i++) {
@@ -62,7 +62,7 @@ public class RiceSalesController {
 		LOGGER.debug("Rendering addItem page for adding rice Item");
 		// item.setCategory("RiceSales");
 		// model.addAttribute("category", item.getCategory());
-		category = "riceSales";
+		category = "Rice";
 		model.addAttribute("category", category);
 
 		return "common/addItem";
